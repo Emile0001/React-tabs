@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Loading } from "./components/Loading";
+import { Error } from "./components/Error";
 
 const url = "https://www.course-api.com/react-tabs-project";
 
@@ -31,6 +32,13 @@ const App = () => {
         return (
             <main>
                 <Loading />
+            </main>
+        );
+    }
+    if (isError) {
+        return (
+            <main>
+                <Error />
             </main>
         );
     }
