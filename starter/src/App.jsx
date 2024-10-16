@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
+import { Loading } from "./components/Loading";
 
 const url = "https://www.course-api.com/react-tabs-project";
-
-// import Loading from "./Loading";
 
 const App = () => {
     const [job, setJob] = useState([]);
@@ -12,20 +11,29 @@ const App = () => {
     const fetchData = async () => {
         try {
             const responds = await fetch(url);
-            setIsLoading(true);
-            setIsError(false);
-
+            if (responds) {
+                setIsLoading(true);
+                setIsError(false);
+            }
             const newJobs = await responds.json();
+
             setJob(newJobs);
             console.log(newJobs);
         } catch (error) {
-            setIsLoading(false);
             setIsError(true);
         }
+        setIsLoading(false);
     };
     useEffect(() => {
         fetchData();
     }, []);
+    if (isLoading) {
+        return (
+            <main>
+                <Loading />
+            </main>
+        );
+    }
     return <h2>Tabs Starter</h2>;
 };
 export default App;
